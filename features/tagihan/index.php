@@ -34,7 +34,7 @@ $result_lunas = $koneksi->query($query_lunas);
 $stats['lunas'] = $result_lunas->fetch_assoc()['total'];
 
 // Total nominal
-$query_nominal = "SELECT SUM(jumlah) as total FROM tb_tagihan WHERE bulan='$bulan' AND tahun='$tahun'";
+$query_nominal = "SELECT SUM(tagihan) as total FROM tb_tagihan WHERE bulan='$bulan' AND tahun='$tahun'";
 $result_nominal = $koneksi->query($query_nominal);
 $stats['nominal'] = $result_nominal->fetch_assoc()['total'] ?? 0;
 

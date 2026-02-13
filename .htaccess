@@ -6,15 +6,19 @@
     RewriteEngine On
     RewriteBase /wigunaperkasa.id/
 
-    # Redirect index.php to clean URL (optional)
-    RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
-    RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+    # Skip static assets (CSS, JS, images, fonts)
+    RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ [NC]
+    RewriteRule .* - [L]
 
-    # Skip existing files and directories
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Skip existing directories
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule .* - [L]
 
-    # Route all requests to index.php
+    # Skip existing files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule .* - [L]
+
+    # Route everything else to index.php
     RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
 </IfModule>
 

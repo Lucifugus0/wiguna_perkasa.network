@@ -23,6 +23,8 @@
         if ($.fn.DataTable) {
             $('.datatable').DataTable({
                 responsive: true,
+                pagingType: 'simple_numbers', // Hanya nomor + Previous/Next, tanpa First/Last
+                pageLength: 10, // Default 10 items per page
                 language: {
                     lengthMenu: "Tampilkan _MENU_ data per halaman",
                     zeroRecords: "Data tidak ditemukan",
@@ -31,11 +33,119 @@
                     infoFiltered: "(difilter dari _MAX_ total data)",
                     search: "Cari:",
                     paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
                         next: "Selanjutnya",
                         previous: "Sebelumnya"
                     }
+                },
+                drawCallback: function() {
+                    // Tunggu sebentar untuk ensure DOM fully rendered
+                    setTimeout(function() {
+                        var $paginate = $('.dataTables_paginate');
+
+                        // 1. Hapus semua tombol disabled (Previous/Next yang disabled)
+                        $paginate.find('.paginate_button.disabled').remove();
+
+                        // 2. Hapus tombol "First" dan "Last" (tidak diperlukan, cukup nomor halaman)
+                        $paginate.find('.paginate_button.first').remove();
+                        $paginate.find('.paginate_button.last').remove();
+
+                        // 3. Hapus ellipsis (...)
+                        $paginate.find('.ellipsis').remove();
+                        $paginate.find('span.ellipsis').remove();
+
+                        // 4. Hapus ghost buttons (empty atau tanpa text)
+                        $paginate.find('.paginate_button').each(function() {
+                            var $btn = $(this);
+                            var text = $btn.text().trim();
+
+                            // Hapus jika kosong atau hanya whitespace
+                            if (!text || text === '' || text === '...' || text === '…') {
+                                $btn.remove();
+                                return;
+                            }
+
+                            // Hapus jika bukan nomor dan bukan Previous/Next/Selanjutnya/Sebelumnya
+                            if (text &&
+                                !text.match(/^\d+$/) &&
+                                text !== 'Selanjutnya' &&
+                                text !== 'Sebelumnya' &&
+                                text !== 'Next' &&
+                                text !== 'Previous') {
+                                $btn.remove();
+                            }
+                        });
+
+                        // 5. Clean up empty spans
+                        $paginate.find('span:empty').remove();
+
+                        // 6. AGGRESSIVE CLEANUP - Hapus semua yang bukan nomor atau Previous/Next
+                        // Cek semua elemen di dalam pagination
+                        $paginate.find('*').each(function() {
+                            var $el = $(this);
+
+                            // Skip jika parent container
+                            if ($el.hasClass('dataTables_paginate') || $el.hasClass('pagination')) {
+                                return;
+                            }
+
+                            var text = $el.text().trim();
+
+                            // Jika elemen punya children, skip (let children handle)
+                            if ($el.children().length > 0) {
+                                return;
+                            }
+
+                            // Hapus jika text tidak valid
+                            if (!text ||
+                                (text !== '' &&
+                                 !text.match(/^\d+$/) &&
+                                 text !== 'Selanjutnya' &&
+                                 text !== 'Sebelumnya' &&
+                                 text !== 'Next' &&
+                                 text !== 'Previous')) {
+                                $el.remove();
+                            }
+                        });
+
+                        // 7. Final cleanup - hapus parent span/li yang kosong
+                        $paginate.find('span:empty, li:empty').remove();
+
+                        // 8. ULTIMATE FIX: Hitung jumlah li, hapus yang berlebih
+                        setTimeout(function() {
+                            var $pagination = $paginate.find('ul.pagination');
+                            var $items = $pagination.children('li');
+
+                            // Count items: harus ada max (previous + numbers + next)
+                            var $previous = $items.filter('.previous');
+                            var $next = $items.filter('.next');
+                            var $numbers = $items.not('.previous').not('.next').not('.disabled');
+
+                            // Hapus semua yang bukan previous, next, atau angka dengan class current
+                            $items.each(function(index) {
+                                var $item = $(this);
+
+                                // Keep previous, next, dan nomor halaman
+                                if ($item.hasClass('previous') ||
+                                    $item.hasClass('next') ||
+                                    $item.hasClass('active') ||
+                                    $item.hasClass('current') ||
+                                    $item.find('a').text().trim().match(/^\d+$/)) {
+                                    return; // Skip, keep this
+                                }
+
+                                // Hapus yang lain
+                                if (!$item.hasClass('disabled')) {
+                                    $item.remove();
+                                }
+                            });
+
+                            // Double check: Jika ada lebih dari 1 item setelah .next, hapus semua
+                            var $afterNext = $pagination.find('.next').nextAll();
+                            if ($afterNext.length > 0) {
+                                $afterNext.remove();
+                            }
+                        }, 50); // Cleanup tambahan 50ms setelah pertama
+                    }, 150); // Increased delay untuk ensure full render
                 }
             });
         }

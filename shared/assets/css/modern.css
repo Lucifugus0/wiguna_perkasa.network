@@ -1,223 +1,1251 @@
-/* ==================== MODERN CUSTOM STYLES ==================== */
-/* Wiguna Perkasa Network - Modern Design Enhancement */
-/* Created: 2026-02-13 */
+/* ==================== MODERN ORLANDO-STYLE DESIGN ==================== */
+/* Wiguna Perkasa Network - Ultra Modern Design */
+/* Created: 2026-02-13 | Inspired by Orlando Dashboard */
 
-/* ===== General Enhancements ===== */
+/* ===== General Reset & Base ===== */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    background: #F9FAFB !important;
+    color: #1A1A1A;
+    line-height: 1.6 !important;
 }
 
 .content-wrapper {
-    background-color: #f4f6f9;
+    background-color: #F9FAFB !important;
+    min-height: 100vh;
 }
 
-/* ===== Card Enhancements ===== */
-.box {
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
+.content {
+    padding: 32px !important;
 }
 
-.box-header {
-    border-bottom: 1px solid #f4f4f4;
-    padding: 15px;
+/* Row spacing */
+.content .row {
+    margin-left: -10px !important;
+    margin-right: -10px !important;
 }
 
-.box-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
+.content .row:first-of-type {
+    margin-top: 0 !important;
 }
 
-.box-subtitle {
-    font-size: 13px;
-    color: #777;
-    margin: 5px 0 0 0;
+/* Stats with header row */
+.stats-with-header {
+    position: relative;
+    margin-top: -60px !important;
 }
 
-/* ===== Stats Cards ===== */
+.stats-header-col {
+    margin-bottom: 20px !important;
+}
+
+.stats-page-title {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #1A1A1A !important;
+    letter-spacing: -0.6px !important;
+    margin: 0 0 20px 0 !important;
+    line-height: 1.2 !important;
+}
+
+.content .row > [class*="col-"] {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+/* ===== Modern Stats Cards (Orlando Style - Flat Colors) ===== */
 .small-box {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    border-radius: 12px !important;
+    background: white !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.2s ease;
+    border: none !important;
+    margin-bottom: 20px;
+    overflow: visible;
+    position: relative;
+    padding: 20px !important;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    gap: 32px !important;
 }
 
 .small-box:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+}
+
+.small-box .inner {
+    padding: 0 !important;
+    flex: 1;
+    min-width: 0;
+}
+
+.small-box .icon {
+    position: static !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 28px !important;
+    opacity: 1 !important;
+    flex-shrink: 0 !important;
+    order: -1 !important;
+}
+
+.small-box .inner h3,
+.small-box .inner p {
+    display: block;
 }
 
 .small-box .inner h3 {
-    font-size: 38px;
-    font-weight: bold;
-    margin: 0 0 10px 0;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    color: #1A1A1A !important;
+    letter-spacing: -0.8px;
+    line-height: 1 !important;
 }
 
 .small-box .inner p {
-    font-size: 14px;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #6B7280 !important;
+    margin: 0 !important;
+    text-transform: none !important;
+    line-height: 1.4 !important;
 }
 
-.stat-percentage {
-    font-size: 12px;
-    margin-top: 5px;
-    opacity: 0.9;
+.small-box-footer {
+    display: none !important;
 }
 
-/* ===== Table Modern ===== */
-.table-modern {
-    background: white;
-    border-radius: 8px;
+/* Orlando Stats Color Variants - Flat Colors */
+.bg-aqua {
+    background: white !important;
+    border-left: 4px solid #8B5CF6 !important;
+}
+
+.bg-aqua .icon {
+    background: #F3E8FF !important;
+    color: #8B5CF6 !important;
+}
+
+.bg-yellow {
+    background: white !important;
+    border-left: 4px solid #EF4444 !important;
+}
+
+.bg-yellow .icon {
+    background: #FEE2E2 !important;
+    color: #EF4444 !important;
+}
+
+.bg-green {
+    background: white !important;
+    border-left: 4px solid #3B82F6 !important;
+}
+
+.bg-green .icon {
+    background: #DBEAFE !important;
+    color: #3B82F6 !important;
+}
+
+.bg-red {
+    background: white !important;
+    border-left: 4px solid #F59E0B !important;
+}
+
+.bg-red .icon {
+    background: #FEF3C7 !important;
+    color: #F59E0B !important;
+}
+
+/* ===== Modern Box/Card ===== */
+.box {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+    margin-bottom: 24px;
+    background: white !important;
     overflow: hidden;
 }
 
+.box-header {
+    border-bottom: 1px solid #E5E7EB !important;
+    padding: 24px !important;
+    background: white !important;
+    border-radius: 12px 12px 0 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+.box-header .fa {
+    font-size: 22px !important;
+    color: #3B82F6 !important;
+    width: 22px !important;
+    height: 22px !important;
+    text-align: center !important;
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.box-header > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.box-title {
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    color: #1A1A1A !important;
+    letter-spacing: -0.4px !important;
+    margin: 0 0 4px 0 !important;
+    line-height: 1.3 !important;
+}
+
+.box-subtitle {
+    font-size: 14px !important;
+    color: #6B7280 !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    display: block !important;
+    line-height: 1.4 !important;
+}
+
+.box-body {
+    padding: 0 !important;
+}
+
+.box-body .table-responsive {
+    margin: 0 !important;
+}
+
+/* ===== Modern Table (Orlando Style) ===== */
+.table-modern {
+    width: 100%;
+    background: white;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin: 0 !important;
+}
+
 .table-modern thead {
-    background-color: #3c8dbc;
-    color: white;
+    background: #F7FAFC !important;
 }
 
 .table-modern thead th {
-    border-bottom: none;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 0.5px;
+    border: none !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+    letter-spacing: 0.8px !important;
+    color: #4A5568 !important;
+    padding: 16px 24px !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+}
+
+.table-modern thead th:first-child {
+    padding-left: 24px !important;
+}
+
+.table-modern thead th:last-child {
+    padding-right: 24px !important;
+}
+
+.table-modern tbody td {
+    border-top: 1px solid #E2E8F0 !important;
+    border-bottom: none !important;
+    padding: 16px 24px !important;
+    font-size: 14px !important;
+    color: #2D3748 !important;
+    vertical-align: middle !important;
+}
+
+.table-modern tbody td:first-child {
+    padding-left: 24px !important;
+}
+
+.table-modern tbody td:last-child {
+    padding-right: 24px !important;
 }
 
 .table-modern tbody tr {
-    transition: background-color 0.2s;
+    transition: background 0.2s;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.table-modern tbody tr:last-child {
+    border-bottom: none;
 }
 
 .table-modern tbody tr:hover {
-    background-color: #f8f9fa;
+    background: #F7FAFC !important;
 }
 
-/* ===== Buttons Enhancement ===== */
-.btn {
-    border-radius: 4px;
-    font-weight: 500;
-    transition: all 0.2s;
+/* Table in box - no extra padding needed */
+.box .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+.box .table-responsive::-webkit-scrollbar {
+    height: 6px;
 }
 
-.btn-action {
-    padding: 5px 10px;
-    font-size: 12px;
-    margin: 0 2px;
+.box .table-responsive::-webkit-scrollbar-track {
+    background: #F7FAFC;
 }
 
-/* ===== Search & Filter Bar ===== */
+.box .table-responsive::-webkit-scrollbar-thumb {
+    background: #CBD5E0;
+    border-radius: 3px;
+}
+
+/* ===== Filter Bar (Orlando Style) ===== */
 .filter-bar {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    background: white !important;
+    padding: 20px 24px !important;
+    border-radius: 16px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid #E2E8F0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+.filter-bar .form-inline {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+}
+
+.filter-bar .form-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 0 !important;
 }
 
 .filter-bar .form-control {
-    border-radius: 4px;
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    transition: all 0.2s;
+    min-width: 140px !important;
+    height: 38px !important;
+    background: white !important;
+    line-height: 1.5 !important;
+    color: #1A1A1A !important;
 }
 
-/* ===== Badge Enhancement ===== */
+.filter-bar .form-control:focus {
+    border-color: #3B82F6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    background: white !important;
+}
+
+.filter-bar label {
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    color: #4A5568 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* ===== Modern Buttons (Orlando Flat Style) ===== */
+.btn {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
+    height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+.btn-primary {
+    background: #3B82F6 !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background: #2563EB !important;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+.btn-success {
+    background: #10B981 !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background: #059669 !important;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3) !important;
+}
+
+.btn-info {
+    background: #0EA5E9 !important;
+    color: white !important;
+}
+
+.btn-info:hover {
+    background: #0284C7 !important;
+}
+
+.btn-danger {
+    background: #EF4444 !important;
+    color: white !important;
+}
+
+.btn-danger:hover {
+    background: #DC2626 !important;
+}
+
+.btn-action {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    margin: 0 4px !important;
+    border-radius: 6px !important;
+    height: 32px !important;
+}
+
+.btn-action:first-child {
+    margin-left: 0 !important;
+}
+
+.btn-action:last-child {
+    margin-right: 0 !important;
+}
+
+.pull-right {
+    margin-left: auto !important;
+}
+
+/* ===== Modern Badge ===== */
 .badge {
-    border-radius: 12px;
-    padding: 4px 10px;
-    font-weight: 500;
-    font-size: 11px;
+    border-radius: 20px !important;
+    padding: 6px 14px !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .badge-success {
-    background-color: #00a65a;
+    background: #10B981 !important;
+    color: white !important;
 }
 
 .badge-warning {
-    background-color: #f39c12;
+    background: #F59E0B !important;
+    color: white !important;
 }
 
 .badge-danger {
-    background-color: #dd4b39;
+    background: #EF4444 !important;
+    color: white !important;
 }
 
-.badge-info {
-    background-color: #00c0ef;
+/* ===== Page Header ===== */
+.content-header h1 {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #1A202C !important;
+    letter-spacing: -0.5px !important;
 }
 
-/* ===== Pagination Modern ===== */
-.pagination {
-    border-radius: 4px;
+.content-header small {
+    color: #718096 !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
 }
 
-.pagination > li > a {
-    border-radius: 4px;
-    margin: 0 2px;
+/* ===== DataTable Overrides ===== */
+.dataTables_wrapper {
+    padding: 20px 24px !important;
 }
 
-/* ===== Modal Enhancement ===== */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    padding: 0 0 16px 0 !important;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    color: #4A5568 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+    font-weight: 500 !important;
+    color: #718096 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+}
+
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    line-height: 1.5 !important;
+    height: 38px !important;
+    vertical-align: middle !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    min-width: 200px !important;
+}
+
+/* DataTables length select specific spacing fix */
+.dataTables_wrapper .dataTables_length select {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-width: 80px !important;
+    padding: 8px 40px 8px 12px !important;
+}
+
+/* Better alignment for DataTables controls */
+.dataTables_wrapper .dataTables_length {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+}
+
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    padding-top: 16px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 6px !important;
+    margin: 0 4px !important;
+    padding: 8px 14px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #4A5568 !important;
+    font-weight: 500 !important;
+}
+
+/* Hover state - sama dengan active (biru + putih) */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #3B82F6 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover a {
+    color: white !important;
+}
+
+/* Active/Current state - biru + putih */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #3B82F6 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current a,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover a {
+    color: white !important;
+}
+
+/* Hide ellipsis, disabled, dan ghost buttons */
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.next.disabled,
+.dataTables_wrapper .dataTables_paginate .ellipsis,
+.dataTables_wrapper .dataTables_paginate span.ellipsis {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Hide any empty or ghost buttons */
+.dataTables_wrapper .dataTables_paginate span > .paginate_button:empty,
+.dataTables_wrapper .dataTables_paginate .paginate_button:not([class*="current"]):not([class*="previous"]):not([class*="next"]):empty {
+    display: none !important;
+}
+
+/* Jangan tampilkan tombol Sebelumnya/Selanjutnya jika disabled */
+.dataTables_wrapper .dataTables_paginate .previous.disabled,
+.dataTables_wrapper .dataTables_paginate .next.disabled {
+    display: none !important;
+}
+
+/* AGGRESSIVE: Sembunyikan tombol First dan Last secara paksa */
+.dataTables_wrapper .dataTables_paginate .first,
+.dataTables_wrapper .dataTables_paginate .last,
+.dataTables_wrapper .dataTables_paginate .paginate_button.first,
+.dataTables_wrapper .dataTables_paginate .paginate_button.last {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+}
+
+/* Sembunyikan tombol yang muncul setelah next/selanjutnya */
+.dataTables_wrapper .dataTables_paginate .next + *,
+.dataTables_wrapper .dataTables_paginate .next.paginate_button + * {
+    display: none !important;
+}
+
+/* ===== PAGINATION HOVER STATE FIX ===== */
+/* Pastikan hover state sama dengan active state */
+
+/* Reset default Bootstrap pagination hover */
+.dataTables_wrapper .dataTables_paginate .pagination > li > a:hover,
+.dataTables_wrapper .dataTables_paginate .pagination > li > span:hover {
+    background: #3B82F6 !important;
+    color: white !important;
+    border-color: #3B82F6 !important;
+    z-index: 2 !important;
+}
+
+/* Hover pada paginate_button */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover a,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover span {
+    background: #3B82F6 !important;
+    background-color: #3B82F6 !important;
+    color: white !important;
+    border: none !important;
+    border-color: #3B82F6 !important;
+}
+
+/* Focus state juga sama */
+.dataTables_wrapper .dataTables_paginate .paginate_button:focus,
+.dataTables_wrapper .dataTables_paginate .paginate_button:focus a,
+.dataTables_wrapper .dataTables_paginate .paginate_button:focus span {
+    background: #3B82F6 !important;
+    background-color: #3B82F6 !important;
+    color: white !important;
+    outline: none !important;
+}
+
+/* Active state tetap sama */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:focus,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current a,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover a,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:focus a {
+    background: #3B82F6 !important;
+    background-color: #3B82F6 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600 !important;
+}
+
+/* Pastikan link <a> di dalam button juga ikut berubah warna */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover > a,
+.dataTables_wrapper .dataTables_paginate .paginate_button:focus > a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+/* Override Bootstrap default pagination hover (untuk backward compatibility) */
+.pagination > li > a:hover,
+.pagination > li > span:hover {
+    background-color: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: white !important;
+}
+
+/* EXTRA CLEANUP: Hide any button after the last number or next button */
+.dataTables_wrapper .dataTables_paginate .pagination > li:last-child:not(.previous):not(.next) + li,
+.dataTables_wrapper .dataTables_paginate .pagination > .next ~ li:not(.next):not(.previous) {
+    display: none !important;
+}
+
+/* Hide the mysterious blue button that appears */
+.dataTables_wrapper .dataTables_paginate > span > a:last-child:not([class*="current"]):not([class*="previous"]):not([class*="next"]),
+.dataTables_wrapper .dataTables_paginate > span:last-child > a {
+    display: none !important;
+}
+
+/* Target specific: Hide elemen setelah .next di dalam ul.pagination */
+.dataTables_wrapper .dataTables_paginate ul.pagination > li.next ~ li,
+.dataTables_wrapper .dataTables_paginate ul.pagination > li:last-child:not(.next):not(.previous):not(.current) {
+    display: none !important;
+}
+
+/* Hide duplicate pagination atau tombol yang tidak seharusnya ada */
+.dataTables_wrapper .dataTables_paginate .pagination > li > a:not([aria-controls]),
+.dataTables_wrapper .dataTables_paginate .pagination > li > span:not([aria-controls]) {
+    /* Biarkan yang punya aria-controls, ini yang valid */
+}
+
+/* Paksa hide semua li yang muncul setelah angka terakhir kecuali next */
+.paging_simple_numbers .pagination > li:nth-last-child(1):not(.next),
+.paging_simple_numbers .pagination > li:nth-last-child(2):not(.next):has(~ .next) {
+    display: none !important;
+}
+
+/* NUCLEAR OPTION: Sembunyikan child terakhir jika bukan previous/next */
+.dataTables_wrapper #DataTables_Table_0_paginate .pagination > li:last-child:not(:has(a[aria-label*="Next"])):not(:has(a[aria-label*="Selanjutnya"])),
+.dataTables_wrapper [id*="DataTables_Table"] .pagination > li:last-child:not(:has(a[aria-label*="Next"])):not(:has(a[aria-label*="Selanjutnya"])) {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Jika tombol terakhir bukan .next atau .previous, sembunyikan */
+.dataTables_paginate.paging_simple_numbers .pagination > li:last-child:not(.next):not(.previous) {
+    display: none !important;
+}
+
+/* ===== Modern Sidebar (Orlando Light Style) ===== */
+.main-sidebar {
+    background: white !important;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05) !important;
+    border-right: 1px solid #E5E7EB !important;
+}
+
+.sidebar {
+    padding-top: 0 !important;
+}
+
+/* User Panel */
+.user-panel {
+    padding: 20px 16px !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    background: white !important;
+}
+
+.user-panel-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-panel-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.user-panel-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-panel-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.user-panel-name {
+    color: #1A1A1A !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    margin: 0 0 2px 0 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-panel-role {
+    display: block;
+    color: #6B7280 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px;
+    line-height: 1.3 !important;
+}
+
+.user-panel-status {
+    color: #10B981 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.user-panel-status i {
+    font-size: 6px !important;
+    color: #10B981 !important;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    padding: 16px 12px !important;
+}
+
+.sidebar-menu > li.header {
+    padding: 16px 12px 8px 12px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    color: #9CA3AF !important;
+    background: transparent !important;
+}
+
+.sidebar-menu > li > a {
+    padding: 12px 12px !important;
+    color: #4B5563 !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    border-left: none !important;
+    border-radius: 8px !important;
+    margin: 2px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.sidebar-menu > li > a > .fa {
+    width: 20px !important;
+    font-size: 18px !important;
+    color: #6B7280 !important;
+    transition: all 0.2s !important;
+    margin-right: 12px !important;
+}
+
+.sidebar-menu > li > a > span {
+    margin-left: 0 !important;
+}
+
+/* Hover Effect */
+.sidebar-menu > li > a:hover {
+    background: #F3F4F6 !important;
+    color: #1A1A1A !important;
+    border-left: none !important;
+}
+
+.sidebar-menu > li > a:hover > .fa {
+    color: #1A1A1A !important;
+    transform: none;
+}
+
+/* Active Menu */
+.sidebar-menu > li.active > a {
+    background: #F3F4F6 !important;
+    color: #1A1A1A !important;
+    border-left: none !important;
+    box-shadow: none !important;
+    font-weight: 600 !important;
+}
+
+.sidebar-menu > li.active > a > .fa {
+    color: #1A1A1A !important;
+}
+
+/* Sidebar Footer Spacing */
+.sidebar-menu > li:last-child {
+    margin-bottom: 20px !important;
+}
+
+/* ===== Header Improvements (Orlando Style) ===== */
+.main-header .navbar {
+    background: white !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.main-header .logo {
+    background: white !important;
+    color: #1A1A1A !important;
+    border-bottom: none !important;
+    border-right: 1px solid #E5E7EB !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.5px !important;
+}
+
+.main-header .logo-lg b {
+    color: #3B82F6 !important;
+}
+
+.main-header .navbar .nav > li > a {
+    color: #4B5563 !important;
+    transition: all 0.2s !important;
+}
+
+.main-header .navbar .nav > li > a:hover {
+    background: #F9FAFB !important;
+    color: #1A1A1A !important;
+}
+
+/* ===== Content Wrapper Improvements ===== */
+.content-wrapper {
+    background: #F7FAFC !important;
+    padding-top: 0 !important;
+}
+
+/* Content Header (Orlando Style) */
+.content-header {
+    padding: 0 !important;
+    background: transparent !important;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    display: none !important;
+}
+
+.content-header > h1 {
+    margin: 0 !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    color: #1A1A1A !important;
+    letter-spacing: -0.8px !important;
+    line-height: 1.2 !important;
+}
+
+.content-header > h1 > small {
+    font-size: 15px !important;
+    color: #6B7280 !important;
+    font-weight: 400 !important;
+    margin-left: 0 !important;
+    display: block !important;
+    margin-top: 6px !important;
+}
+
+.content-header > .breadcrumb {
+    background: transparent !important;
+    padding: 0 !important;
+    margin-top: 8px !important;
+}
+
+.content-header > .breadcrumb > li {
+    color: #9CA3AF !important;
+    font-size: 14px !important;
+}
+
+.content-header > .breadcrumb > li > a {
+    color: #3B82F6 !important;
+    font-weight: 500 !important;
+}
+
+/* Page Header - Additional Styles */
+.content-header h1 {
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    color: #1A1A1A !important;
+    letter-spacing: -0.8px !important;
+    line-height: 1.2 !important;
+}
+
+.content-header small {
+    color: #6B7280 !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    display: block !important;
+    margin-top: 6px !important;
+}
+
+/* ===== Form Elements ===== */
+.form-control {
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+    transition: all 0.2s !important;
+    color: #2D3748 !important;
+}
+
+.form-control:focus {
+    border-color: #3B82F6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.form-group label {
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    color: #4A5568 !important;
+    margin-bottom: 8px !important;
+}
+
+select.form-control {
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A5568' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    padding: 8px 48px 8px 16px !important;
+    line-height: 1.5 !important;
+    height: 38px !important;
+}
+
+.filter-bar select.form-control {
+    background-color: white !important;
+}
+
+/* ===== User Dropdown Menu ===== */
+.navbar-nav > .user-menu > .dropdown-menu {
+    border-radius: 12px !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    margin-top: 8px !important;
+    padding: 0 !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-header {
+    background: #3B82F6 !important;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 24px !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-header > p {
+    color: white !important;
+    font-weight: 600 !important;
+    margin-top: 8px !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-header > p > small {
+    display: block;
+    font-size: 12px !important;
+    opacity: 0.9;
+    margin-top: 4px !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer {
+    background: #F7FAFC !important;
+    padding: 16px !important;
+    border-radius: 0 0 12px 12px !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    padding: 8px 20px !important;
+    transition: all 0.2s !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn-default {
+    background: white !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #4A5568 !important;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn-default:hover {
+    background: #3B82F6 !important;
+    color: white !important;
+    border-color: #3B82F6 !important;
+}
+
+/* ===== Sidebar Toggle ===== */
+.sidebar-toggle {
+    color: #4A5568 !important;
+    transition: all 0.2s !important;
+}
+
+.sidebar-toggle:hover {
+    background: #F9FAFB !important;
+    color: #3B82F6 !important;
+}
+
+/* ===== Alert Messages ===== */
+.alert {
+    border-radius: 12px !important;
+    border: none !important;
+    padding: 16px 20px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.alert-success {
+    background: #D1FAE5 !important;
+    color: #065F46 !important;
+}
+
+.alert-warning {
+    background: #FEF3C7 !important;
+    color: #92400E !important;
+}
+
+.alert-danger {
+    background: #FEE2E2 !important;
+    color: #991B1B !important;
+}
+
+.alert-info {
+    background: #DBEAFE !important;
+    color: #1E40AF !important;
+}
+
+/* ===== Modal Improvements ===== */
 .modal-content {
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
 }
 
 .modal-header {
-    border-bottom: 1px solid #e5e5e5;
-    border-radius: 8px 8px 0 0;
+    background: #3B82F6 !important;
+    color: white !important;
+    border-radius: 16px 16px 0 0 !important;
+    padding: 20px 24px !important;
+    border-bottom: none !important;
+}
+
+.modal-title {
+    font-weight: 700 !important;
+    font-size: 18px !important;
+}
+
+.modal-body {
+    padding: 24px !important;
 }
 
 .modal-footer {
-    border-top: 1px solid #e5e5e5;
-    border-radius: 0 0 8px 8px;
+    background: #F7FAFC !important;
+    border-radius: 0 0 16px 16px !important;
+    padding: 16px 24px !important;
+    border-top: 1px solid #E2E8F0 !important;
 }
 
-/* ===== Loading Spinner ===== */
-.spinner-border {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    vertical-align: text-bottom;
-    border: 0.25em solid currentColor;
-    border-right-color: transparent;
+/* ===== Pagination ===== */
+.pagination > li > a,
+.pagination > li > span {
+    border-radius: 8px !important;
+    margin: 0 4px !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #4A5568 !important;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+}
+
+.pagination > li > a:hover {
+    background: #3B82F6 !important;
+    color: white !important;
+    border-color: #3B82F6 !important;
+}
+
+.pagination > .active > a,
+.pagination > .active > span {
+    background: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+}
+
+/* ===== Loading State ===== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #E5E7EB;
+    border-top-color: #3B82F6;
     border-radius: 50%;
-    animation: spinner-border 0.75s linear infinite;
+    animation: spin 0.8s linear infinite;
 }
 
-@keyframes spinner-border {
+@keyframes spin {
     to { transform: rotate(360deg); }
 }
 
-/* ===== Responsive Tweaks ===== */
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F7FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CBD5E0;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #A0AEC0;
+}
+
+/* Sidebar scrollbar (light theme) */
+.sidebar::-webkit-scrollbar-track {
+    background: white;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
     .small-box .inner h3 {
-        font-size: 28px;
+        font-size: 28px !important;
     }
 
-    .box-title {
-        font-size: 16px;
+    .content {
+        padding: 20px !important;
     }
-}
 
-/* ===== Custom Alert ===== */
-.alert-modern {
-    border-radius: 8px;
-    border-left: 4px solid;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-}
-
-.alert-modern.alert-success {
-    border-left-color: #00a65a;
-}
-
-.alert-modern.alert-warning {
-    border-left-color: #f39c12;
-}
-
-.alert-modern.alert-danger {
-    border-left-color: #dd4b39;
-}
-
-.alert-modern.alert-info {
-    border-left-color: #00c0ef;
+    .content-header {
+        padding: 20px !important;
+    }
 }

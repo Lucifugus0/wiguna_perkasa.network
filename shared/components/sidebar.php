@@ -8,12 +8,15 @@ $user_level = $_SESSION['ses_level'] ?? 'User';
     <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= Router::url('dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-                <p><?= htmlspecialchars($_SESSION['ses_nama'] ?? 'Guest') ?></p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <div class="user-panel-content">
+                <div class="user-panel-logo">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect fill='%23F3F4F6' width='48' height='48' rx='10'/%3E%3Cpath fill='%23D1D5DB' d='M24 10c5 0 9 4 9 9s-4 9-9 9-9-4-9-9 4-9 9-9zm0 21c7.5 0 15 3.75 15 7.5v4.5H9v-4.5c0-3.75 7.5-7.5 15-7.5z'/%3E%3C/svg%3E" alt="User" class="user-panel-logo-img">
+                </div>
+                <div class="user-panel-info">
+                    <p class="user-panel-name"><?= htmlspecialchars($_SESSION['ses_nama'] ?? 'Guest') ?></p>
+                    <span class="user-panel-role"><?= htmlspecialchars($_SESSION['ses_level'] ?? 'User') ?></span>
+                    <a href="#" class="user-panel-status"><i class="fa fa-circle"></i> Online</a>
+                </div>
             </div>
         </div>
 

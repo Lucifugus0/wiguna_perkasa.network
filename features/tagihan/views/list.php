@@ -3,8 +3,11 @@
 // Modern billing list with stats and filters
 ?>
 
-<!-- Stats Row -->
-<div class="row">
+<!-- Stats Row with Header -->
+<div class="row stats-with-header">
+    <div class="col-md-12 stats-header-col">
+        <h2 class="stats-page-title">Data Tagihan</h2>
+    </div>
     <div class="col-lg-3 col-xs-6">
         <?= StatsComponent::render([
             'title' => number_format($stats['total']),
@@ -138,7 +141,7 @@ function renderTagihanTable($result) {
                     <td><?= htmlspecialchars($row['nama']) ?></td>
                     <td><?= htmlspecialchars($row['alamat']) ?></td>
                     <td><?= htmlspecialchars($row['paket'] ?? '-') ?></td>
-                    <td>Rp <?= number_format($row['jumlah'], 0, ',', '.') ?></td>
+                    <td>Rp <?= number_format($row['tagihan'], 0, ',', '.') ?></td>
                     <td>
                         <span class="badge badge-<?= $status_badge ?>">
                             <?= $status_text ?>

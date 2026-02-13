@@ -29,15 +29,15 @@ class CardComponent {
         <div class="box box-<?= $type ?><?= $collapsed ? ' collapsed-box' : '' ?>">
             <?php if ($title): ?>
             <div class="box-header with-border">
-                <h3 class="box-title">
-                    <?php if ($icon): ?>
-                        <i class="fa <?= $icon ?>"></i>
-                    <?php endif; ?>
-                    <?= $title ?>
-                </h3>
-                <?php if ($subtitle): ?>
-                    <p class="box-subtitle"><?= $subtitle ?></p>
+                <?php if ($icon): ?>
+                    <i class="fa <?= $icon ?>"></i>
                 <?php endif; ?>
+                <div>
+                    <h3 class="box-title"><?= $title ?></h3>
+                    <?php if ($subtitle): ?>
+                        <p class="box-subtitle"><?= $subtitle ?></p>
+                    <?php endif; ?>
+                </div>
                 <?php if ($collapsible): ?>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse">

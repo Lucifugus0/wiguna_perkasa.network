@@ -26,13 +26,13 @@ $user_level = $_SESSION['ses_level'] ?? 'User';
                 <!-- User Account Menu -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= Router::url('dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect fill='%23E5E7EB' width='160' height='160'/%3E%3Cpath fill='%239CA3AF' d='M80 20c16.5 0 30 13.5 30 30s-13.5 30-30 30-30-13.5-30-30 13.5-30 30-30zm0 70c25 0 50 12.5 50 25v15H30v-15c0-12.5 25-25 50-25z'/%3E%3C/svg%3E" class="user-image" alt="User Image">
                         <span class="hidden-xs"><?= htmlspecialchars($user_name) ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= Router::url('dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect fill='%23F3F4F6' width='160' height='160'/%3E%3Cpath fill='%23D1D5DB' d='M80 20c16.5 0 30 13.5 30 30s-13.5 30-30 30-30-13.5-30-30 13.5-30 30-30zm0 70c25 0 50 12.5 50 25v15H30v-15c0-12.5 25-25 50-25z'/%3E%3C/svg%3E" class="img-circle" alt="User Image">
                             <p>
                                 <?= htmlspecialchars($user_name) ?>
                                 <small><?= htmlspecialchars($user_level) ?></small>
