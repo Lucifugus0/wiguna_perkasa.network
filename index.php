@@ -14,12 +14,19 @@
 	include "inc/koneksi.php";
 	include "inc/rupiah.php";
 	include "inc/routerosapi.class.php";
-	
+
 	$API = new RouterosAPI();
 	$API->port = $router_port;
 	// if (!$API->connect($router_host, $router_username, $router_password)) {
 	// 	die("Tidak dapat terhubung ke Mikrotik!");
 	// }
+
+	// ==================== TITIPAN HANDLERS (BEFORE HTML OUTPUT) ====================
+	if (isset($_GET['page']) && $_GET['page'] == 'titipan') {
+		require_once "admin/titipan/handler/ajax_qr.php";
+		require_once "admin/titipan/handler/save.php";
+		require_once "admin/titipan/handler/delete.php";
+	}
 ?>
 
 <!DOCTYPE html>
@@ -182,7 +189,7 @@
 					</li>
 
 					<li class="treeview">
-						<a href="?page=buka-tagihan">
+						<a href="?page=data-tagihan">
 							<i class="fa fa-table"></i>
 							<span>Data Tagihan</span>
 							<span class="pull-right-container">
@@ -194,6 +201,15 @@
 						<a href="?page=lunas-tagihan">
 							<i class="fa fa-money"></i>
 							<span>Pembayaran Lunas</span>
+							<span class="pull-right-container">
+							</span>
+						</a>
+					</li>
+
+					<li class="treeview">
+						<a href="?page=titipan">
+							<i class="fa fa-qrcode"></i>
+							<span>Titipan</span>
 							<span class="pull-right-container">
 							</span>
 						</a>
@@ -302,13 +318,13 @@
 				include "admin/pelanggan_off/del_pelanggan.php";
 				break;
 
-			//Pengguna
-              case 'data-tagihan':
-                  include "admin/tagihan/data_tagihan.php";
-                  break;
-              case 'buat-tagihan':
-                  include "admin/tagihan/buat_tagihan.php";
-				  break;
+
+      case 'data-tagihan':
+        include "admin/tagihan/data_tagihan.php";
+        break;
+      case 'buat-tagihan':
+        include "admin/tagihan/buat_tagihan.php";
+				break;
 			case 'buka-tagihan':
                   include "admin/tagihan/buka_tagihan.php";
 				  break;
@@ -317,6 +333,10 @@
 				  break;
 			case 'lunas-tagihan':
                   include "admin/tagihan/lunas_tagihan.php";
+                  break;
+
+			case 'titipan':
+                  include "admin/titipan/view/titipan.php";
                   break;
 
               //default
@@ -392,6 +412,16 @@
 				$(".select2").select2();
 			});
 		</script>
+
+		<?php
+		// Load titipan script if on titipan page
+		if (isset($_GET['page']) && $_GET['page'] == 'titipan') {
+			// Pass alert variables to script
+			$alert_message = $GLOBALS['titipan_alert_message'] ?? '';
+			$alert_type = $GLOBALS['titipan_alert_type'] ?? '';
+			include "admin/titipan/view/titipan_script.php";
+		}
+		?>
 </body>
 
 </html>

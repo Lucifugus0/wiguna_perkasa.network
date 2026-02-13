@@ -1,12 +1,22 @@
 <?php
+	ob_start(); // Mulai output buffering untuk mencegah header issues
 	session_start();
 	require_once '../inc/routerosapi.class.php';
 	require_once '../inc/koneksi.php';
-	
+
+	// Prevent caching
+	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+	header("Pragma: no-cache");
+
 	$API = new RouterosAPI();
 	$API->port = $router_port;
-	if (!$API->connect($router_host, $router_username, $router_password)) {
-		die("Tidak dapat terhubung ke Mikrotik!");
+
+	// Coba koneksi ke MikroTik
+	$mikrotik_connected = $API->connect($router_host, $router_username, $router_password, $router_port);
+
+	if (!$mikrotik_connected) {
+		// Jika gagal koneksi, set session warning
+		$_SESSION['mikrotik_warning'] = true;
 	}
 	
 	$check_paket = $koneksi->query("SELECT * FROM tb_paket ORDER BY id_paket ASC");
@@ -32,20 +42,30 @@
 	}
 	
 	$password_teknisi = 'berhasil';
-	
+
 	$is_teknisi = isset($_SESSION['is_teknisi_allures']) ? true : false;
 	if (isset($_GET['password']) && $_GET['password'] == $password_teknisi) {
 		$_SESSION['is_teknisi_allures'] = true;
 		header("Location: index.php");
+		exit;
 	}
-	
+
 	if ($_POST) {
 		if (isset($_POST['password']) && @$_POST['password'] == $password_teknisi) {
-			$exists_hotspot_user = $API->comm("/ip/hotspot/user/print", [
-				'?name' => $_POST['email']
-			]);
-			
-			if (count($exists_hotspot_user) == 0) {
+			// Cek duplikasi email di database lokal dulu
+			$email_check = $koneksi->query("SELECT id_pelanggan FROM tb_pelanggan WHERE email = '" . $koneksi->real_escape_string($_POST['email']) . "'");
+			$email_exists = $email_check && $email_check->num_rows > 0;
+
+			// Cek di MikroTik jika terkoneksi
+			$hotspot_exists = false;
+			if ($mikrotik_connected) {
+				$exists_hotspot_user = $API->comm("/ip/hotspot/user/print", [
+					'?name' => $_POST['email']
+				]);
+				$hotspot_exists = count($exists_hotspot_user) > 0;
+			}
+
+			if (!$email_exists && !$hotspot_exists) {
 				$cek_id_pelanggan = mysqli_query($koneksi, "SELECT * FROM tb_pelanggan WHERE id_pelanggan = '".$_POST['id']."'");
 				
 				if (mysqli_num_rows($cek_id_pelanggan) == 0) {
@@ -73,29 +93,61 @@
 						$id_paket = $_POST['paket'];
 						$cek_paket = mysqli_query($koneksi, "SELECT * FROM tb_paket WHERE id_paket = '$id_paket'");
 						$data_paket = $cek_paket->fetch_assoc();
-						
-						$API->comm("/ip/hotspot/user/add", [
-							'name' => $_POST['email'],
-							'password' => $_POST['password_pelanggan'],
-							'comment' => $_POST['id'] . ' ' . $_POST['nama'],
-							'profile' => $data_paket['name']
-						]);
-						$API->disconnect();
-						
-						unset($_POST);
-						$alert = "Swal.fire({title: 'Tambah Data Berhasil', text: '', icon: 'success', confirmButtonText: 'OKE'});";
+
+						// Tambahkan ke MikroTik hanya jika terkoneksi
+						$mikrotik_status = "Database Saja";
+						if ($mikrotik_connected) {
+							try {
+								$API->comm("/ip/hotspot/user/add", [
+									'name' => $_POST['email'],
+									'password' => $_POST['password_pelanggan'],
+									'comment' => $_POST['id'] . ' ' . $_POST['nama'],
+									'profile' => $data_paket['name']
+								]);
+								$mikrotik_status = "Database + MikroTik";
+								$API->disconnect();
+							} catch (Exception $e) {
+								$mikrotik_status = "Database Saja (MikroTik Error)";
+							}
+						}
+
+						$success_msg = $mikrotik_connected
+							? 'Pelanggan berhasil ditambahkan ke Database dan MikroTik'
+							: 'Pelanggan berhasil ditambahkan ke Database (MikroTik tidak terhubung)';
+						$_SESSION['success_message'] = $success_msg;
+						header("Location: index.php");
+						exit;
 					} else {
-						$alert = "Swal.fire({title: 'Tambah Data Gagal', text: '', icon: 'error', confirmButtonText: 'OKE'});";
+						$_SESSION['error_message'] = 'Gagal menyimpan ke database: ' . $koneksi->error;
+						header("Location: index.php");
+						exit;
 					}
 				} else {
-					$alert = "Swal.fire({title: 'Tambah Data Gagal - ID Pelanggan Sudah Digunakan', text: '', icon: 'error', confirmButtonText: 'OKE'});";
+					$_SESSION['error_message'] = 'ID Pelanggan Sudah Digunakan';
+					header("Location: index.php");
+					exit;
 				}
 			} else {
-				$alert = "Swal.fire({title: 'Tambah Data Gagal - E-Mail Sudah Digunakan', text: '', icon: 'error', confirmButtonText: 'OKE'});";
+				$_SESSION['error_message'] = 'E-Mail Sudah Digunakan';
+				header("Location: index.php");
+				exit;
 			}
 		} else {
-			$alert = "Swal.fire({title: 'Password Teknisi Salah', text: '', icon: 'error', confirmButtonText: 'OKE'});";
+			$_SESSION['error_message'] = 'Password Teknisi Salah';
+			header("Location: index.php");
+			exit;
 		}
+	}
+
+	// Ambil pesan dari session untuk ditampilkan
+	$alert = '';
+	if (isset($_SESSION['success_message'])) {
+		$alert = "Swal.fire({title: 'Tambah Data Berhasil', text: '" . $_SESSION['success_message'] . "', icon: 'success', confirmButtonText: 'OKE'});";
+		unset($_SESSION['success_message']);
+	}
+	if (isset($_SESSION['error_message'])) {
+		$alert = "Swal.fire({title: 'Tambah Data Gagal', text: '" . $_SESSION['error_message'] . "', icon: 'error', confirmButtonText: 'OKE'});";
+		unset($_SESSION['error_message']);
 	}
 ?>
 <!DOCTYPE html>
@@ -138,6 +190,19 @@
 					<?php } ?>
 				</div>
 				<div class="card-body">
+					<!-- Warning MikroTik -->
+					<?php if (isset($_SESSION['mikrotik_warning']) && $_SESSION['mikrotik_warning']): ?>
+					<div class="alert alert-warning alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h4><i class="icon fa fa-warning"></i> Peringatan MikroTik!</h4>
+						Tidak dapat terhubung ke MikroTik Router. Pelanggan akan ditambahkan ke database saja.
+						<br><small>IP: <?= $router_host ?>:<?= $router_port ?></small>
+					</div>
+					<?php
+						unset($_SESSION['mikrotik_warning']);
+					endif;
+					?>
+
 					<?php if ($is_teknisi == false) { ?>
 					<form method="GET" class="row">
 						<div class="col-md-6 form-group">
@@ -160,68 +225,68 @@
 					<form method="POST" class="row">
 						<div class="col-md-12 form-group">
 							<label for="id">ID Pelanggan</label>
-							<input type="text" name="id" id="id" class="form-control" value="<?= isset($_POST['id']) ? $_POST['id'] : $id_pelanggan ?>">
+							<input type="text" name="id" id="id" class="form-control" value="<?= $id_pelanggan ?>">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="nama">Nama Pelanggan</label>
-							<input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Pelanggan" value="<?= @$_POST['nama'] ?>">
+							<input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Pelanggan">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="mac_modem">MAC / SN Modem</label>
-							<input type="text" name="mac_modem" id="mac_modem" class="form-control" placeholder="MAC / SN Modem" value="<?= @$_POST['mac_modem'] ?>">
+							<input type="text" name="mac_modem" id="mac_modem" class="form-control" placeholder="MAC / SN Modem">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="ip_modem">IP Modem</label>
-							<input type="text" name="ip_modem" id="ip_modem" class="form-control" placeholder="IP Modem" value="<?= @$_POST['ip_modem'] ?>">
+							<input type="text" name="ip_modem" id="ip_modem" class="form-control" placeholder="IP Modem">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="teknisi">Teknisi</label>
-							<input type="text" name="teknisi" id="teknisi" class="form-control" placeholder="Teknisi" value="<?= @$_POST['teknisi'] ?>">
+							<input type="text" name="teknisi" id="teknisi" class="form-control" placeholder="Teknisi">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="titik_odp">Titik ODP</label>
-							<input type="text" name="titik_odp" id="titik_odp" class="form-control" placeholder="Titik ODP" value="<?= @$_POST['titik_odp'] ?>">
+							<input type="text" name="titik_odp" id="titik_odp" class="form-control" placeholder="Titik ODP">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="alamat">Alamat</label>
-							<input type="text" name="alamat" id="alamat" class="form-control" placeholder="Alamat" value="<?= @$_POST['alamat'] ?>">
+							<input type="text" name="alamat" id="alamat" class="form-control" placeholder="Alamat">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="patokan">Patokan</label>
-							<input type="text" name="patokan" id="patokan" class="form-control" placeholder="Patokan" value="<?= @$_POST['patokan'] ?>">
+							<input type="text" name="patokan" id="patokan" class="form-control" placeholder="Patokan">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="no_hp">No HP Utama</label>
-							<input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="No HP Utama Diawali 62" value="<?= @$_POST['no_hp'] ?>">
+							<input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="No HP Utama Diawali 62">
 						</div>
 						<div class="col-md-6 form-group">
-							<label for="no_hp">No HP Cadangan</label>
-							<input type="number" name="no_hp_cadangan" id="no_hp_cadangan" class="form-control" placeholder="No HP Cadangan Diawali 62" value="<?= @$_POST['no_hp'] ?>">
+							<label for="no_hp_cadangan">No HP Cadangan</label>
+							<input type="number" name="no_hp_cadangan" id="no_hp_cadangan" class="form-control" placeholder="No HP Cadangan Diawali 62">
 						</div>
 						<div class="col-md-6 form-group">
-							<label for="text">E-Mail</label>
-							<input type="text" name="email" id="email" class="form-control" placeholder="E-Mail" value="<?= @$_POST['email'] ?>">
+							<label for="email">E-Mail</label>
+							<input type="text" name="email" id="email" class="form-control" placeholder="E-Mail">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="password_pelanggan">Password</label>
-							<input type="text" name="password_pelanggan" id="password_pelanggan" class="form-control" placeholder="Password" value="<?= @$_POST['password_pelanggan'] ?>">
+							<input type="text" name="password_pelanggan" id="password_pelanggan" class="form-control" placeholder="Password">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="paket">Paket</label>
 							<select name="paket" id="paket" class="form-control">
 								<option value="">Pilih Salah Satu</option>
 								<?php while ($data_paket = $check_paket->fetch_assoc()) { ?>
-								<option value="<?= $data_paket['id_paket'] ?>" <?= $data_paket['id_paket'] == @$_POST['paket'] ? 'selected' : '' ?>><?= $data_paket['paket'] ?> | Rp <?= number_format($data_paket['tarif'], 0, ',', '.') ?></option>
+								<option value="<?= $data_paket['id_paket'] ?>"><?= $data_paket['paket'] ?> | Rp <?= number_format($data_paket['tarif'], 0, ',', '.') ?></option>
 								<?php } ?>
 							</select>
 						</div>
 						<div class="col-md-6 form-group">
-							<label for="no_hp">HP Otomatis</label>
-							<input type="text" name="hp_otomatis" id="hp_otomatis" class="form-control" placeholder="HP Otomatis" value="<?= @$_POST['hp_otomatis'] ?>">
+							<label for="hp_otomatis">HP Otomatis</label>
+							<input type="text" name="hp_otomatis" id="hp_otomatis" class="form-control" placeholder="HP Otomatis">
 						</div>
 						<div class="col-md-6 form-group">
-							<label for="text">Tanggal Pemasangan</label>
-							<input type="date" name="tanggal_pemasangan" id="tanggal_pemasangan" class="form-control" placeholder="E-Mail" value="<?= @$_POST['tanggal_pemasangan'] ?>">
+							<label for="tanggal_pemasangan">Tanggal Pemasangan</label>
+							<input type="date" name="tanggal_pemasangan" id="tanggal_pemasangan" class="form-control">
 						</div>
 						<div class="col-md-6 form-group">
 							<label for="password">Password Teknisi</label>
@@ -403,3 +468,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); // Flush output buffer ?>

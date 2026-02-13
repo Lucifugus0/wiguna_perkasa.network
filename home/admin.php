@@ -1,7 +1,8 @@
+<!-- ==================== ✅ DASHBOARD DATA CALCULATION (Modified by Claude Code) ==================== -->
 <?php
 	$sql = $koneksi->query("SELECT count(id_paket) as paket from tb_paket");
 	while ($data= $sql->fetch_assoc()) {
-	
+
 		$paket=$data['paket'];
 	}
 ?>
@@ -46,6 +47,16 @@
 		$seluruh_tagihan_total = $seluruh_tagihan_total+$data_paket['tarif'];
 	}
 ?>
+
+<!-- ✅ Added Titipan Calculation -->
+<?php
+	// Total Titipan (Belum Lunas)
+	$sql_titipan = $koneksi->query("SELECT COUNT(id_titipan) as jumlah_titipan, SUM(jumlah) as total_titipan FROM tb_titipan WHERE status='BL'");
+	$data_titipan = $sql_titipan->fetch_assoc();
+	$jumlah_titipan = $data_titipan['jumlah_titipan'] ?? 0;
+	$total_titipan = $data_titipan['total_titipan'] ?? 0;
+?>
+<!-- ==================== END DASHBOARD DATA CALCULATION ==================== -->
 
 <section class="content-header">
 	<h1>
@@ -186,3 +197,39 @@
 			</div>
 		</div>
 		<?php } ?>
+
+	<!-- ==================== ✅ TITIPAN CARDS (Added by Claude Code - Visible to All Admins) ==================== -->
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-aqua">
+			<div class="inner">
+				<h2>
+					<b><?= $jumlah_titipan; ?></b>
+				</h2>
+				<p>Titipan Belum Lunas</p>
+			</div>
+			<div class="icon">
+				<i class="ion-cash"></i>
+			</div>
+			<a href="?page=titipan" class="small-box-footer">More info
+				<i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-teal">
+			<div class="inner">
+				<h2>
+					<b>Rp<?= number_format($total_titipan, 0, ',', '.'); ?></b>
+				</h2>
+				<p>Total Titipan (Rp)</p>
+			</div>
+			<div class="icon">
+				<i class="ion-android-wallet"></i>
+			</div>
+			<a href="?page=titipan" class="small-box-footer">More info
+				<i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div>
+	<!-- ==================== END TITIPAN CARDS ==================== -->
